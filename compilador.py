@@ -32,9 +32,6 @@ func = convert_dec(codigo_bin[26:])
 address = codigo_bin[6:]
 address_inver = address[::-1]
 
-#calcular o código address
-
-
 if op == 32:
     #instrução l
     if op == 33:  
