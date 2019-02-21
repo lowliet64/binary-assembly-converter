@@ -130,20 +130,25 @@ if op == 1:
     op_i("bltz")
 if op == 5:
     op_i("bne")
-if op == :
-    op_i("")
-if op == :
-    op_i("")
-if op == :
-    op_i("")
-if op == :
-    op_i("")
-if op == :
-    op_i("")
-if op == :
-    op_i("")
-if op == :
-    op_i("")
+if op == 36:
+    op_i("lbu")
+if op == 33:
+    op_i("lh")
+if op == 37:
+    op_i("lhu")
+if op == 35:
+    op_i("lw")
+if op == 49:
+    op_i("lwcl")
+if op == 40:
+    op_i("sb")
+if op == 41:
+    op_i("sh")
+if op == 43:
+    op_i("sw")
+if op == 57:
+    op_i("swcl")
+
 
 # Operação do tipo J
 if op == 2:
