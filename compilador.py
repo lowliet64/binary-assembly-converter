@@ -2,6 +2,7 @@
 Feito por Simei Thander - TADS 2018.2
 '''
 
+
 def convert_dec(n):
     n = (str(n)[::-1])
     total = 0
@@ -9,43 +10,47 @@ def convert_dec(n):
         total += (int(n[i]) * (2 ** i))
     return total
 
-#calcular o código address
+
+# calcular o código address
 def calc_address(str):
     cont_address = 1
     cont_address_total = 0
 
     for i in range(len(address_inver)):
         if i != 0:
-            cont_address *= 2 
-        
+            cont_address *= 2
+
         if int(address_inver[i]) == 1:
             cont_address_total += 1 * cont_address
     return cont_address_total
+
 
 def op_r(inst):
     global rt, rs, rt
     print("{} ${}, ${}, ${}".format(inst, rd, rs, rt))
 
+
 def op_i(inst):
     global rt, imm, rs
     print("{} {}$, {}(${})".format(inst, rt, imm, rs))
 
-#leitura do codigo binário
+
+# leitura do codigo binário
 codigo_bin = input("Digite o codigo binário: ")
 
-#captura as variáveis e operações da String e converte em decimal
+# captura as variáveis e operações da String e converte em decimal
 op = convert_dec(codigo_bin[:6])
 rt = convert_dec(codigo_bin[11:16])
-rs =  convert_dec(codigo_bin[6:11])
+rs = convert_dec(codigo_bin[6:11])
 rd = convert_dec(codigo_bin[14:19])
 imm = convert_dec(codigo_bin[16:])
 func = convert_dec(codigo_bin[26:])
 address = codigo_bin[6:]
 address_inver = address[::-1]
 
-#main code
+# main code
 
-#Operação do tipo R
+# Operação do tipo R
 if op == 0:
     if func == 32:
         op_r("add")
@@ -92,28 +97,54 @@ if op == 0:
     if func == 43:
         op_r("sltu")
 
-#Operação do tipo I
+# Operação do tipo I
 if op == 32:
     op_i("lb")
-if op == 33:  
-    op_i("ih")  
-if op == 8:  
-    op_i("addi")   
-if op == :  
-    op_i("addiu")   
-if op == :  
-    op_i("slti")   
-if op == :  
-    op_i("sltiu") 
-if op == :  
-    op_i("andi")   
-if op == :  
-    op_i("ori")   
-if op == :  
-    op_i("xori") 
-if op == :  
-    op_i("lui")         
-        
-#Operação do tipo J
+if op == 33:
+    op_i("ih")
+if op == 8:
+    op_i("addi")
+if op == 9:
+    op_i("addiu")
+if op == 10:
+    op_i("slti")
+if op == 11:
+    op_i("sltiu")
+if op == 12:
+    op_i("andi")
+if op == 13:
+    op_i("ori")
+if op == 14:
+    op_i("xori")
+if op == 15:
+    op_i("lui")
+if op == 4:
+    op_i("beq")
+if op == 1 and rt == 1:
+    op_i("bgez")
+if op == 7:
+    op_i("bgtz")
+if op == 6:
+    op_i("blez")
+if op == 1:
+    op_i("bltz")
+if op == 5:
+    op_i("bne")
+if op == :
+    op_i("")
+if op == :
+    op_i("")
+if op == :
+    op_i("")
+if op == :
+    op_i("")
+if op == :
+    op_i("")
+if op == :
+    op_i("")
+if op == :
+    op_i("")
+
+# Operação do tipo J
 if op == 2:
     print("j {}".format(calc_address(address_inver)))
