@@ -1,5 +1,7 @@
-# Compiler for Assembly
-Compilador de Binário para Assembly em Python.
+# Binary-Assembly Converter
+Programa criado em Python para converter de Assembly para Binário e vice-versa.
+
+Em desenvolvimento!
 
 ### Como usar:
 
