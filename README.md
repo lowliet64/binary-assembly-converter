@@ -9,7 +9,9 @@ Programa em desenvolvimento utilizando Python para converter de Assembly para Bi
 
 3 - Execute o compilador.py
 
-4 - Verifique a saída em saida.txt
+4 - Escolha a opção desejada para converter os dados
+
+5 - Verifique a saída em saida.txt
 
 ----
 
@@ -23,4 +25,6 @@ Program in development with Python for converting Assembly to Binary or Binaty t
 
 3 - Run the compilador.py
 
-4 - Check the output in saida.txt
+4 - Chose one option
+
+5 - Check the output in saida.txt
