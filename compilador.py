@@ -1,5 +1,5 @@
 '''
-Feito por Simei Thander - TADS 2018.2 v2.0
+Feito por Simei Thander - TADS 2018.2
 '''
 
 texto_saida = []
