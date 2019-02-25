@@ -19,7 +19,7 @@ Program in development with Python for converting Assembly to Binary or Binaty t
 
 ### How to use:
 
-1 - Download and install the Python3 interpreter oon your system.
+1 - Download and install the Python3 interpreter on your system.
 
 2 - Insert the 32bit instrunctions on the "entrada.txt" file (one per line)
 
