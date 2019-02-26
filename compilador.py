@@ -3,7 +3,7 @@ Crate by Simei Thander - TADS 2018.2
 
 '''
 print("---------------------------")
-print("add the binary code in entrada.txt at root folder")
+print("add the Binary or Assembly code in entrada.txt at root folder")
 print("---------------------------")
 print("Tap 0 for Binaty to Assembly")
 print("Tap 1 for Assembly to Binaty")
