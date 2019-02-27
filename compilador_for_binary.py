@@ -12,48 +12,33 @@ def fsa():
         sa = "0"+sa
     return sa
 
-def fimm():
-    imm = assembly[16:]
-    imm = imm.replace("$","")
+def imm_res():
+    assembly[1] = assembly[1].replace("$","")
+    assembly[2] = assembly[2].replace("$","")
+    rs = assembly[1]
+    rs = rs.replace(",","")
+    rs = bin(int(rs))
+    rs = rs.replace("0b","")
+    while len(rs) <= 4:
+        rs = "0"+rs
+
+
+    assembly2 = assembly[2].split("(")
+    rt = assembly2[0]
+    rt = bin(int(rt))
+    rt = rt.replace("0b","")
+    while len(rt) <= 4:
+        rt = "0"+rt
+
+
+    imm = assembly[1].replace(")","")
     imm = imm.replace(",","")
-    imm = imm.replace("(","")
-    imm = imm.replace(")","")
     imm = bin(int(imm))
     imm = imm.replace("0b","")
-    while len(imm) <= 16:
+    while len(imm) <= 15:
         imm = "0"+imm
-    return imm
 
-#remove $ from registrator
-rd = assembly[1]
-rd = rd.replace("$","")
-rd = rd.replace(",","")
-
-rs = assembly[2]
-rs = rs.replace("$","")
-rs = rs.replace(",","")
-rs = rs.replace("(","")
-rs = rs.replace(")","")
-
-rt = assembly[3]
-rt = rt.replace("$","")
-rt = rt.replace(",","")
-
-#Transform RD, RS, RT in binary and add 0 if the registrator is less than 5 bits
-rd = bin(int(rd))
-rd = rd.replace("0b","")
-while len(rd) <= 4:
-    rd = "0"+rd
-
-rs = bin(int(rs))
-rs = rs.replace("0b","")
-while len(rs) <= 4:
-    rs = "0"+rs
-
-rt = bin(int(rt))
-rt = rt.replace("0b","")
-while len(rt) <= 4:
-    rt = "0"+rt
+    return rs+rt+imm
 
 #Type R array
 instructions_r = ['sll','srvl','sra','sllv','srl','srav','jr','jalr','syscall',
@@ -68,6 +53,37 @@ instruction_i = ['addi','addiu','andi','beq','bgez','bgtz','blez','bltz',
 
 #Instructions type R
 if instruction in instructions_r:
+    #remove $ from registrator
+    rd = assembly[1]
+    rd = rd.replace("$","")
+    rd = rd.replace(",","")
+
+    rs = assembly[2]
+    rs = rs.replace("$","")
+    rs = rs.replace(",","")
+    rs = rs.replace("(","")
+    rs = rs.replace(")","")
+
+    rt = assembly[3]
+    rt = rt.replace("$","")
+    rt = rt.replace(",","")
+
+    #Transform RD, RS, RT in binary and add 0 if the registrator is less than 5 bits
+    rd = bin(int(rd))
+    rd = rd.replace("0b","")
+    while len(rd) <= 4:
+        rd = "0"+rd
+
+    rs = bin(int(rs))
+    rs = rs.replace("0b","")
+    while len(rs) <= 4:
+        rs = "0"+rs
+
+    rt = bin(int(rt))
+    rt = rt.replace("0b","")
+    while len(rt) <= 4:
+        rt = "0"+rt
+
     if instruction == "sll":
         binary_code = "00000000000{}{}{}000000".format(rd,rt,fsa())
     elif instruction == "srlv":
@@ -127,12 +143,34 @@ if instruction in instructions_r:
 
 #Instructions type I
 if instruction in instruction_i:
+    if instruction != "lb" and instruction != "lbu" and instruction != "lh" and instruction != "lhu" and instruction != "lw" and instruction != "lqcl" and instruction != "sb" and instruction != "sh" and instruction != "sw" and instruction != "swcl":
+        rs = assembly[1].replace("$","")
+        rs = rs.replace(",","")
+        rs = bin(int(rs))
+        rs = rs.replace("0b","")
+        while len(rs) <= 4:
+            rs = "0"+rs
+
+        rt = assembly[2].replace("$","")
+        rt = rt.replace(",","")
+        rt = bin(int(rt))
+        rt = rt.replace("0b","")
+        while len(rt) <= 4:
+            rt = "0"+rt
+        
+        imm = assembly[3].replace("$","")
+        imm = imm.replace(",","")
+        imm = bin(int(imm))
+        imm = imm.replace("0b","")
+        while len(imm) <= 15:
+            imm = "0"+imm
+
     if instruction == "addi":
-        binary_code = "001000{}{}{}".format(rt,rs,fimm()) 
+        binary_code = "001000{}{}{}".format(rt,rs,imm) 
     elif instruction == "addiu":
-        binary_code = "001001{}{}{}".format(rt,rs,fimm()) 
+        binary_code = "001001{}{}{}".format(rt,rs,imm) 
     elif instruction == "andi":
-        binary_code = "001100{}{}{}".format(rt,rs,fimm()) 
+        binary_code = "001100{}{}{}".format(rt,rs,imm) 
     elif instruction == "beq":
         binary_code = "000100{}{}0000000000000000".format(rs,rt) 
     elif instruction == "bgez":
@@ -146,34 +184,34 @@ if instruction in instruction_i:
     elif instruction == "bne":
         binary_code = "000101{}{}0000000000000000".format(rs,rt)
     elif instruction == "lb":
-        binary_code = "100000{}{}{}".format(rt,fimm(),rs)
+        binary_code = "100000{}".format(imm_res())
     elif instruction == "lbu":
-        binary_code = "100001{}{}{}".format(rt,fimm(),rs)
+        binary_code = "100001{}{}{}".format(rt,imm,rs)
     elif instruction == "lh":
-        binary_code = "100100{}{}{}".format(rt,fimm(),rs)
+        binary_code = "100100{}{}{}".format(rt,imm,rs)
     elif instruction == "lhu":
-        binary_code = "100100{}{}{}".format(rt,fimm(),rs)
+        binary_code = "100100{}{}{}".format(rt,imm,rs)
     elif instruction == "lui":
-        binary_code = "001111{}{}".format(rt,fimm())
+        binary_code = "001111{}{}".format(rt,imm)
     elif instruction == "lw":
-        binary_code = "100011{}{}{}".format(rt,fimm(),rs)
+        binary_code = "100011{}{}{}".format(rt,imm,rs)
     elif instruction == "lwcl":
-        binary_code = "110001{}{}{}".format(rt,fimm(),rs)
+        binary_code = "110001{}{}{}".format(rt,imm,rs)
     elif instruction == "ori":
-        binary_code = "001101{}{}{}".format(rt,rs,fimm())
+        binary_code = "001101{}{}{}".format(rt,rs,imm)
     elif instruction == "slti":
-        binary_code = "001010{}{}{}".format(rt,fimm(),rs)
+        binary_code = "001010{}{}{}".format(rt,imm,rs)
     elif instruction == "sb":
-        binary_code = "101000{}{}{}".format(rt,fimm(),rs)
+        binary_code = "101000{}{}{}".format(rt,imm,rs)
     elif instruction == "sltiu":
-        binary_code = "001111{}{}{}".format(rt,rs,fimm())
+        binary_code = "001111{}{}{}".format(rt,rs,imm)
     elif instruction == "sh":
-        binary_code = "101001{}{}{}".format(rt,fimm(),rs)
+        binary_code = "101001{}{}{}".format(rt,imm,rs)
     elif instruction == "sw":
-        binary_code = "101011{}{}{}".format(rt,fimm(),rs)
+        binary_code = "101011{}{}{}".format(rt,imm,rs)
     elif instruction == "swcl":
-        binary_code = "111001{}{}{}".format(rt,fimm(),rs)
+        binary_code = "111001{}{}{}".format(rt,imm,rs)
     elif instruction == "xori":
-        binary_code = "001110{}{}{}".format(rt,rs,fimm())
+        binary_code = "001110{}{}{}".format(rt,rs,imm)
 
 print(binary_code)
